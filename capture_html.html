@@ -1,0 +1,172 @@
+<!DOCTYPE html> 
+<html> 
+  <body onresize="screenSize()" onload="screenSize()" >
+           
+        <p>
+            <button id="kapat" onClick="kapat();">Paylasim ekranini Kapat</button>&nbsp;
+            <button id="start">Paylasmak için resim seç</button>&nbsp;
+           
+            <button id="stop">Paylasmayi durdur</button>&nbsp;
+            <button id="resimcek" onClick="takepicture();">Resmi paylas</button> 
+
+        </p>
+        
+        <video id="video" autoplay></video>
+        <canvas id="canvas"  ></canvas>
+        <div class="output">
+          <img id="photo" src="" alt="çekilen resim ">
+      </div>
+        
+        
+
+<style>
+  #stop{ visibility:hidden;}
+  #resimcek{ visibility:hidden;}
+  #video {
+     
+  /*border: 1px solid #999;
+  /*width: 100%;
+  max-width: 50%;*/
+}
+
+.error {
+  color: red;
+}
+
+.warn {
+  color: orange;
+}
+
+.info {
+  color: darkgreen;
+}
+
+#canvas {
+        display: none;
+    }
+.output {
+  width: 100%;
+  max-width: 50%;
+        display: inline-block;
+       
+    }
+#photo {
+        border: 1px solid black;
+        width:100%;
+        height: 100%;
+        object-fit: cover;
+        visibility:hidden;
+    }    
+</style>
+
+ <script>
+ var largeur=0;
+ var hauteur=0;  
+function screenSize(){
+  if(window.innerWidth !== undefined && window.innerHeight !== undefined) { 
+    largeur = window.innerWidth;
+    hauteur = window.innerHeight;
+  } else {  
+    largeur = document.documentElement.clientWidth;
+    hauteur = document.documentElement.clientHeight;
+  }
+   
+  
+ 
+}
+
+screenSize();
+
+
+
+var videoElem = document.getElementById("video");
+var canvas = document.getElementById('canvas');
+var photo = document.getElementById('photo');
+
+const startElem = document.getElementById("start");
+const stopElem = document.getElementById("stop");
+const kapatElem =document.getElementById("kapat");
+const resimcekElem=document.getElementById("resimcek");
+
+videoElem.style.width=parseInt(largeur/2)+"px";
+videoElem.style.height=parseInt(hauteur/2)+"px";
+// Options for getDisplayMedia()
+
+var displayMediaOptions = {
+  video: {
+    cursor: "always"
+  },
+  audio: false
+};
+
+
+// Set event listeners for the start and stop buttons
+startElem.addEventListener("click", function(evt) {
+  startCapture();
+}, false);
+
+stopElem.addEventListener("click", function(evt) {
+  stopCapture();
+}, false);
+
+
+async function startCapture() {
+ 
+  try {
+    videoElem.srcObject = await navigator.mediaDevices.getDisplayMedia(displayMediaOptions);
+    dumpOptionsInfo();
+    //canvas.style.width=parseInt(largeur/2)+"px";
+    //canvas.style.height=parseInt(hauteur/2)+"px";
+    startElem.style.visibility="visible";
+    stopElem.style.visibility="visible";
+    resimcekElem.style.visibility="visible";
+    kapatElem.style.visibility="hidden";;
+  } catch(err) {
+    console.error("Error: " + err);
+  }
+
+
+
+}
+
+function stopCapture(evt) {
+  let tracks = videoElem.srcObject.getTracks();
+  tracks.forEach(track => track.stop());
+  videoElem.srcObject = null;
+  var mesajim="stop_capture!";
+  parent.connection.send(mesajim);
+  parent.document.getElementById("ekranim").style.display="none";
+}
+
+function kapat(){parent.document.getElementById("ekranim").style.display="none";}
+
+function dumpOptionsInfo() {
+  const videoTrack = videoElem.srcObject.getVideoTracks()[0];
+
+  console.info("Track settings:");
+  console.info(JSON.stringify(videoTrack.getSettings(), null, 2));
+  console.info("Track constraints:");
+  console.info(JSON.stringify(videoTrack.getConstraints(), null, 2));
+}
+       
+//************************************************************ //
+function takepicture() {
+  photo.style.visibility="visible";
+  var genislik= parseInt(largeur/1);
+  var yukseklik= parseInt(hauteur/1);
+            var context = canvas.getContext('2d');
+            context.canvas.width = genislik; context.canvas.height = yukseklik; 
+            context.drawImage(videoElem,0,0, genislik, yukseklik);    
+                var datam = canvas.toDataURL('image/png');
+                photo.setAttribute('src', datam);
+                localStorage.setItem('dataEkran', datam);
+
+var mesaj="ekranim!"+datam+"!";
+parent.connection.send(mesaj);
+
+        }
+
+ </script>       
+</body> 
+
+</html>					 
