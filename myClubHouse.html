@@ -26,8 +26,8 @@
 
    <!-- TOOL BOX-->
   <section class="container" id="container" >
-    <div id="room_name" style="color:rgb(238, 20, 20); font-weight: bold;float:left;">Salon adi </div>
-
+    <div id="room_name" title="Toplanti Salonunun Adi" style="color:rgb(238, 20, 20); font-weight: bold;float:left;">Salon adi </div>
+    <img src="openScreenShare.png" style="width: 30px; border-color: black; border-width: 15px;float:left;" id="open_screen_share"  onclick="go2VideoConf();" title="Video konferans odasina baglan.">
     <img src="hang-up-icon.png" style="width: 40px;border-radius: 10px; float:left;" id="Sortir" class="sortir" onclick="stopMedia();" title="Tolantiyi Terket ?">
     <button class="myButton" id="kontrol-micro" onClick='local_micro_control();' >Microfonu kapat</button>
     <button class="myButton" id="moderatorluge_basvur" onClick='moderatorluge_basvur();' >Moderator ol</button>
@@ -144,8 +144,7 @@ function logMouseOut() {
       
         }
       }     
-   // }
-        
+          
   }, false);
 
 
@@ -182,11 +181,7 @@ function soz_ver(){
   var sira_id=document.getElementById("soz_sirasi").firstElementChild.id;
   var sira_id_lenght=sira_id.length;
   var soz_id = sira_id.substring(5, sira_id_lenght);
-   /*lokal islemeler
-    - Resmini degistir
-    - beklemeden çikart
-  */
-  
+    
   var speak_larg = document.getElementById("orientation").dataset.l;
   var speak_resim_w= parseInt(speak_larg/40);
   
@@ -741,7 +736,9 @@ function stopMedia() {
     else {return false; }
 }
 
-
+function go2VideoConf(){
+  window.location="http://kozeri.altervista.org/makina62";
+}
 
 // ====== DECODAGE ========= //
 function decoding_data(data){
