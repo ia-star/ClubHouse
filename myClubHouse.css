@@ -44,6 +44,7 @@ body {
       /*justify-content: center;*/
       flex-wrap: wrap;
      flex-direction: var(--flex-direction);
+      border:black;
   
   }
   
