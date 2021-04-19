@@ -18,7 +18,7 @@
   </header>
   
   <section  class="kontrol" id="kontrol">
-    <div class="title">Kozeri Toplanti Salonu</div>
+    <div id="baslik" class="title">Kozeri Toplanti Salonu</div>
     <input type="text"  class="fields" placeholder="Buraya kendi adinizi girin" id="name" value="" title=" Tolanti sirasinda katilimcilar bu adi görecekler !">
     <input type="text"  class="fields" placeholder="Buraya Toplanti salonunun adini girin"  id="OdaIsmi" value="" title ="Katilimcilarla paylasilan toplanti yerinin adi ">
     <button  class="aksyon_butonu salona_gir_butonu" id="btn-openjoin-room"> Tolantiya buyrun !</button>        
@@ -48,10 +48,10 @@
 
   <div id="moderator_tool"  class="open_clicked" style="display:none;">
       <select id="open_clicked">
-        <option value="0" > Islemler  </option>
-        <option value="mute_clicked" > Mikrofonu nu kapat </option>
-        <option value="unmute_clicked" > Mikrofonu nu aç </option>
-        <option  value="data_update"> Verleri tazele</option>
+        <option value="0" id="zero"> Islemler  </option>
+        <option value="mute_clicked" id="mute_clicked"> Mikrofonu nu kapat </option>
+        <option value="unmute_clicked" id="unmute_clicked"> Mikrofonu nu aç </option>
+        <option  value="data_update" id="data_update"> Verleri tazele</option>
       </select>
   </div>
   
@@ -69,28 +69,90 @@
 if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
   document.getElementById("ekran_paylas").style.display="none";
 }
+// =================================================== //
+// ==== NAVIGATORUN DILINI BUL Ve Mesajlari Ayarla==== //
+// =================================================== //
 
-/* ******************************************** */
-/* ========  TOOL BOX ========================= */
-/* ******************************************** */
-/*//const tool=document.getElementById("wrapper");
-const tool=document.body;
-var statusElem=document.getElementById("local_status");
-tool.onmouseover = logMouseOver;
-tool.onmouseout = logMouseOut; 
-function logMouseOver() {
-  if(statusElem.getAttribute("data-enter")!=1){
-    setTimeout(() => {
-    document.getElementById('container').style.visibility = "visible"; 
-  }, 100);
-  }
+var language = navigator.language;
+if (language.indexOf('fr') > -1) {
+  document.getElementById("btn-openjoin-room").innerHTML ="Entrez!";
+  document.getElementById("baslik").innerHTML ="Kozeri Audio Conférence!";
+  document.getElementById("name").setAttribute("placeholder","Entrez votre nom");
+  document.getElementById("name").setAttribute("title","Votre nom sera visible par les participants de la réunion");
+  document.getElementById("OdaIsmi").setAttribute("placeholder","Entrez le nom de la salle de réunion");
+  document.getElementById("OdaIsmi").setAttribute("title","Le nom, de la salle de réunion, partagé avec les participants");
+  document.getElementById("room_name").setAttribute("title","Le nom de la salle de réunion");
+  document.getElementById("open_screen_share").setAttribute("title","Allez vers la salle de vidéo conférence ");
+  document.getElementById("Sortir").setAttribute("title","Quittez la salle de réunion");
+  var stop_micro="Fermer votre micro !";
+  var start_micro="Ouvrir votre micro !";
+  document.getElementById("kontrol-micro").innerHTML =stop_micro;
+  var leave_room="Quittez la salle de réunion ?";
+  var start_moderation="Commencer Administration";
+  var stop_moderation="Quitter Administration";
+  document.getElementById("moderatorluge_basvur").innerHTML =start_moderation;
+  var start_waiting_speak="prendre parole";
+  var stop_waiting_speak= "céder tour de parole";
+  document.getElementById("soz_kontrolu").innerHTML =start_waiting_speak;
+  document.getElementById("ekran_paylas").innerHTML ="Partager Ecran!";
+  var start_all_micro="Ouvrir les micro";
+  var stop_all_micro="Fermer les micros";
+  document.getElementById("mikrofonlarin_kontrolu").innerHTML =stop_all_micro;
+  document.getElementById("soz_ver").innerHTML ="Donnez la parole";
+
+  document.getElementById("zero").innerHTML = "Réglages";
+  document.getElementById("mute_clicked").innerHTML = "Fermer son micro";
+  document.getElementById("unmute_clicked").innerHTML = "Ouvrir son micro";
+  document.getElementById("data_update").innerHTML = "Mettre à jour les données";
+  
 }
-function logMouseOut() { 
-  setTimeout(() => {
-    document.getElementById('container').style.visibility = "hidden"; 
-  }, 6000);
+else if (language.indexOf('tr') > -1) {
+  var stop_micro="Mikrofonunu kapat!";
+  var start_micro="Mikrofonunu aç !";
+  document.getElementById("kontrol-micro").innerHTML =stop_micro;
+  var start_moderation="Moderatör ol";
+  var stop_moderation="Moderatörlügü terket";
+  document.getElementById("moderatorluge_basvur").innerHTML =start_moderation;
+  var start_all_micro="Mikrofonlari aç";
+  var stop_all_micro="Mikrofonlari kapat";
+  document.getElementById("mikrofonlarin_kontrolu").innerHTML =stop_all_micro;
 }
-*/
+
+else {
+  document.getElementById("btn-openjoin-room").innerHTML ="Open/Join Room!";
+  document.getElementById("baslik").innerHTML ="Kozeri Audio Conference!";
+  document.getElementById("name").setAttribute("placeholder","Your name");
+  document.getElementById("name").setAttribute("title","Your name will be visible to meeting participants");
+  document.getElementById("OdaIsmi").setAttribute("placeholder","Enter the name of the meeting room");
+  document.getElementById("OdaIsmi").setAttribute("title","Meeting room name shared with the participants");
+  document.getElementById("room_name").setAttribute("title","Meeting room name");
+  document.getElementById("open_screen_share").setAttribute("title","Go to tje videoconference Room");
+  document.getElementById("Sortir").setAttribute("title","Leave meeting room");
+  var stop_micro="Stop your micro !";
+  var start_micro="Start your micro !";
+  document.getElementById("kontrol-micro").innerHTML =stop_micro;
+  var leave_room="Leave meeting room ?";
+  var start_moderation="strat Administration";
+  var stop_moderation="Stop Administration";
+  document.getElementById("moderatorluge_basvur").innerHTML =start_moderation;
+  var start_waiting_speak="Wait for speaking";
+  var stop_waiting_speak= "Stop waiting for speaking";
+  document.getElementById("soz_kontrolu").innerHTML =start_waiting_speak;
+  document.getElementById("ekran_paylas").innerHTML ="Screen Share !";
+  var start_all_micro="Open all micro";
+  var stop_all_micro="Close all micros";
+  document.getElementById("mikrofonlarin_kontrolu").innerHTML =stop_all_micro;
+  document.getElementById("soz_ver").innerHTML ="Let to speak";
+
+  document.getElementById("zero").innerHTML = "Settings";
+  document.getElementById("mute_clicked").innerHTML = "Stop his microphone";
+  document.getElementById("unmute_clicked").innerHTML = "Start his microphone";
+  
+}
+
+
+
+
 /* ******************************************** */
 /* ========  ACTION ON USERS  ================= */
 /* ******************************************** */
@@ -240,7 +302,7 @@ if(beklemede=="ON"){
    document.getElementById(soz_id).setAttribute("data-bekleme_sirasi",0);
 
   // buton yazisini degistir
-  document.getElementById("soz_kontrolu").innerText="Söz iste";
+  document.getElementById("soz_kontrolu").innerText=start_waiting_speak;
   // durumu kaydet
   document.getElementById("local_status").setAttribute("data-waiting_speaker","OFF");
  
@@ -264,7 +326,7 @@ if(beklemede=="ON"){
   //alert("statue ekle:"+soz_id);
 
   // buton yazisini degistir
-  document.getElementById("soz_kontrolu").innerText="Konusma sirami terkediyorum";
+  document.getElementById("soz_kontrolu").innerText=stop_waiting_speak;
   // durumu kaydet
   document.getElementById("local_status").setAttribute("data-waiting_speaker","ON");
   // Sirada oldugunu statuse ekle
@@ -319,12 +381,12 @@ function mikrofonlarin_kontrolu(){
   all_micro_status=document.getElementById("local_status").getAttribute("data-all_micro");
    if(all_micro_status=="OFF"){ //Kapali
     connection.send("mikrofolari_ac!");
-    document.getElementById("mikrofonlarin_kontrolu").innerText="Mikrofonlari kapat";
+    document.getElementById("mikrofonlarin_kontrolu").innerText=stop_all_micro;
     document.getElementById("local_status").setAttribute("data-all_micro","ON");
     }
    else { // hepsi açik
       connection.send("mikrofolari_kapat!");
-      document.getElementById("mikrofonlarin_kontrolu").innerText="Mikrofonlari aç";
+      document.getElementById("mikrofonlarin_kontrolu").innerText=start_all_micro;
       document.getElementById("local_status").setAttribute("data-all_micro","OFF");
       
     }
@@ -336,16 +398,16 @@ function local_micro_control(){
   var local_micro_status=document.getElementById("wrapper").firstChild.getAttribute("data-mikrofon");
   if(local_micro_status=="true"){
     // micro açik ozaman kapatalim;
-    document.getElementById("kontrol-micro").innerText="Mikrofonu Aç";
+    document.getElementById("kontrol-micro").innerText=start_micro;
     mute_local_micro();
   }
   else if(local_micro_status=="false"){
     // micro kapali o zaman açalim
-    document.getElementById("kontrol-micro").innerText="Mikrofonu Kapat";
+    document.getElementById("kontrol-micro").innerText=stop_micro;
     unmute_local_micro();
   }
   else {
-    document.getElementById("kontrol-micro").innerText="Mikrofonu Aç";
+    document.getElementById("kontrol-micro").innerText=start_micro;
     unmute_local_micro();
   }
 }
@@ -385,7 +447,7 @@ function moderatorluge_basvur(){
     document.getElementById(kendi_id).setAttribute("data-admin",kendi_id);
     // Moderateur _basvuruyu OFF a getir
     document.getElementById("moderator").style.display="inline";
-    document.getElementById("moderatorluge_basvur").innerText="Moderatörlügü terket";
+    document.getElementById("moderatorluge_basvur").innerText=stop_moderation;
     // Moderateur resmini koy
     var long = document.getElementById("orientation").dataset.h;
     var resim_h= parseInt(long/50);
@@ -399,7 +461,7 @@ function moderatorluge_basvur(){
     document.getElementById(kendi_id).setAttribute("data-admin",0);
     // Moderateur _basvuruyu ON a getir
     document.getElementById("moderator").style.display="none";
-    document.getElementById("moderatorluge_basvur").innerText="Moderator ol";
+    document.getElementById("moderatorluge_basvur").innerText=start_moderation;
     // moderateur resmini kaldir
     document.getElementById("moder"+kendi_id).innerHTML="";
   }
@@ -651,7 +713,6 @@ connection.onstream = function(event) {
    
    // audio element i div audiox e yukle
    document.getElementById("audio"+event.userid).appendChild(event.mediaElement); 
-
    // adimi namex e yukle
    document.getElementById("name"+event.userid).innerText=kisi_adi;
 
@@ -661,21 +722,7 @@ var imagex=document.createElement('img');
      imagex.id="img"+event.userid;
      mediaControls.appendChild(imagex); 
      imagex.className="imagex"; 
-
-
-
    screenSize();
-/*
-  // mikrofonu göster
-  var mikro_larg = document.getElementById("orientation").dataset.l;
-  var mikro_resim_w= parseInt(mikro_larg/40);
-  document.getElementById("mesaj"+event.userid).innerHTML="<img src='micro_on.png' width='"+mikro_resim_w+"px'>";
-
-  // konusma durumumu göster
-  var speak_larg = document.getElementById("orientation").dataset.l;
-  var speak_resim_w= parseInt(speak_larg/40);
-  document.getElementById("konus"+event.userid).innerHTML="<img src='speak_on.png' width='"+speak_resim_w+"px'>";
-   */
   
   }
 
@@ -684,31 +731,23 @@ var imagex=document.createElement('img');
 
 
 // on data connection opens
-connection.onopen = function(event) { 
-    
-  adimi_gonder(); 
-  // resmim varsa Gönder
-  //resmimi_gonder(); 
-  //microfon_gonder();
-  //konusma_durumumu_gonder();
-  //moderateur_gonder();
-}
+            connection.onopen = function(event) {  
+              adimi_gonder(); 
+            }
  
 // on message 		   
            connection.onmessage = function(event) {
-            decoding_data(event.data);
+              decoding_data(event.data);
             };
 
 // on data connection error
             connection.onerror = function(e) {
-                console.debug('Veri transfer Hatasi. Hedef user id', e.userid, 'Error', e);
-                
+               console.debug('Veri transfer Hatasi. Hedef user id', e.userid, 'Error', e);  
             };
 
 // on data connection close
             connection.onclose = function(e) {
-                console.debug('Veri baglantisi kapali. Hedef user id', e.userid, 'Error', e);
-                
+                console.debug('Veri baglantisi kapali. Hedef user id', e.userid, 'Error', e);   
             };
 
 
@@ -730,7 +769,7 @@ connection.onopen = function(event) {
 ------- KENDI  ODANI TERKET ------
 // ********************************* */
 function stopMedia() {
-  var r = confirm("Toplantiyi terket ?");
+  var r = confirm(leave_room);
   
     if (r == true) {location.reload(); }
     else {return false; }
@@ -760,7 +799,7 @@ function decoding_data(data){
           document.getElementById("moderatorluge_basvur").style.display="none";
             // soz isteme butonunu aç
             document.getElementById("soz_kontrolu").style.display="inline";
-          document.getElementById("soz_kontrolu").innerText="söz iste";
+          document.getElementById("soz_kontrolu").innerText=start_waiting_speak;
           
           // konusani kaydet ve resmini goster
           document.getElementById("local_status").setAttribute("data-actif_speaker",konusan_id);
@@ -958,7 +997,7 @@ function decoding_data(data){
           if(ben.id==konusan_id){
           // soz isteme butonunu aç
           document.getElementById("soz_kontrolu").style.display="inline";
-          document.getElementById("soz_kontrolu").innerText="söz iste";
+          document.getElementById("soz_kontrolu").innerText=start_waiting_speak;
           document.getElementById("local_status").setAttribute("data-waiting_speaker","OFF");
           }
            
@@ -979,7 +1018,7 @@ function decoding_data(data){
             // soz isteme butonunu kapat
           document.getElementById("soz_kontrolu").style.display="none";
           document.getElementById("local_status").setAttribute("data-waiting_speaker","OFF");
-          document.getElementById("soz_kontrolu").innerText="söz iste"; 
+          document.getElementById("soz_kontrolu").innerText=start_waiting_speak; 
         }
       }
 }
